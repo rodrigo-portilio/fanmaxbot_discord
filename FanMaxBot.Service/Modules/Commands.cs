@@ -16,6 +16,7 @@ namespace FanMaxBot.Service.Modules
             await ReplyAsync($"Olá {user.Username} meu nome é Duffy e sou o bot e mascote do canal estou aqui para te ajudar.");
             await ReplyAsync("Digite !github para conhecer o repositorio do canal.");
             await ReplyAsync("Digite !live para saber os dias das lives.");
+            await ReplyAsync("Digite !codigo para saber aonde está meu código.");
         }
 
         [Command("ping")]

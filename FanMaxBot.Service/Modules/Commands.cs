@@ -24,6 +24,13 @@ namespace FanMaxBot.Service.Modules
             await ReplyAsync("Pong");
         }
 
+        [Command("codigo")]
+        public async Task Codigo()
+        {
+            await ReplyAsync("Meu código está no github caso queira me melhorar ou aprender como eu fui criado.");
+            await ReplyAsync("https://github.com/fanmax/fanmaxbot_discord");
+        }
+
         [Command("github")]
         public async Task Github()
         {

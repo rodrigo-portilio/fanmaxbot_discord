@@ -9,11 +9,12 @@ namespace FanMaxBot.Service.Modules
 {
     public class Commands : ModuleBase<SocketCommandContext>
     {
+
         [Command("help")]
         public async Task Help()
         {
             IUser user = Context.User;
-            await ReplyAsync($"Olá {user.Username} meu nome é Duffy e sou o bot e mascote do canal estou aqui para te ajudar.");
+            await ReplyAsync($"Olá {user.Username}, sou o bot e mascote do canal estou aqui para te ajudar.");
             await ReplyAsync("Digite !github para conhecer o repositorio do canal.");
             await ReplyAsync("Digite !live para saber os dias das lives.");
             await ReplyAsync("Digite !codigo para saber aonde está meu código.");

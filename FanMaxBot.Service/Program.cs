@@ -17,6 +17,8 @@ namespace FanMaxBot.Service
         private DiscordSocketClient _client;
         private CommandService _command;
         private IServiceProvider _service;
+        private IConfigurationRoot _configuration;
+        private string _botName;
 
         static void Main(string[] args) => new Program().RunBotAsync().GetAwaiter().GetResult();
 
@@ -26,8 +28,10 @@ namespace FanMaxBot.Service
                 .AddJsonFile("appsettings.json")
                 .AddUserSecrets<Program>();
 
-            IConfigurationRoot configuration = builder.Build();
-            var token = configuration.GetSection("discord:token").Value;
+            _configuration = builder.Build();
+            var token = _configuration.GetSection("discord:token").Value;
+
+            _botName = _configuration.GetSection("discord:nameBot").Value;
 
             _client = new DiscordSocketClient();
 
@@ -45,6 +49,7 @@ namespace FanMaxBot.Service
             await _client.LoginAsync(TokenType.Bot, token);
 
             await _client.StartAsync();
+
 
             await UserJoinAsync();
 
@@ -64,9 +69,10 @@ namespace FanMaxBot.Service
 
         public async Task AnnounceJoinedUser(SocketGuildUser user)
         {
-            var channel = _client.GetChannel(663473390962606081) as SocketTextChannel; // Gets the channel to send the message in
+            var idChannel = _configuration.GetSection("discord:idChannelJoinedUser").Value;
+            var channel = _client.GetChannel(ulong.Parse(idChannel)) as SocketTextChannel; // Gets the channel to send the message in
             await channel.SendMessageAsync($"Bem-vindo {user.Username} ao canal"); //Welcomes the new user
-            await user.SendMessageAsync($"Olá {user.Username} meu nome é Duffy e sou o bot e mascote do canal FanMax.");
+            await user.SendMessageAsync($"Olá {user.Username} meu nome é {_botName} e sou o bot e mascote do canal {channel.Guild.Name}.");
             await user.SendMessageAsync("As lives do canal são na quarta-feira às 21hrs e no sábado às 15hrs");
         }
 
